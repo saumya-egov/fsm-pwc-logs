@@ -1,0 +1,19 @@
+Name:         fsm-68c5bbf88c-pslh6
+Labels:       app=fsm
+Controlled By:  ReplicaSet/fsm-68c5bbf88c
+  fsm-db-migration:
+    Image:          egovio/fsm-db:2.3-patch-odisha-e91eaefc5-8
+    Image ID:       docker.io/egovio/fsm-db@sha256:a21411e9236c5d42ea9a451f218b3c51a47a92426e5263fb9bfbd2e27693c32e
+      SCHEMA_TABLE:      fsm_schema
+  fsm:
+    Image:          egovio/fsm:2.3-patch-odisha-e91eaefc5-8
+    Image ID:       docker.io/egovio/fsm@sha256:db9428ebfcbddcdc0dcc18b7fa3b16897bdd9f0c97fe049fdae3c9d6cbf96a8c
+    Liveness:   http-get http://:8080/fsm/actuator/health delay=120s timeout=3s period=60s #success=1 #failure=5
+    Readiness:  http-get http://:8080/fsm/actuator/health delay=90s timeout=3s period=30s #success=1 #failure=5
+      EGOV_FSM_CALCULATOR_HOST:                  http://fsm-calculator.egov:8080/
+      SPRING_KAFKA_CONSUMER_GROUP_ID:            egov-fsm-services
+      PERSISTER_SAVE_FSM_TOPIC:                  save-fsm-application-1
+      PERSISTER_UPDATE_FSM_TOPIC:                update-fsm-application
+      PERSISTER_UPDATE_FSM_WORKFLOW_TOPIC:       update-fsm-workflow-application
+      PERSISTER_UPDATE_FSM_ADHOC_TOPIC:          update-fsm-adhoc-application
+      JAEGER_SERVICE_NAME:                       fsm
