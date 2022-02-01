@@ -1,0 +1,125 @@
+Name:         fsm-68c5bbf88c-pslh6
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk01.osdc.gov.in/10.150.231.4
+Start Time:   Mon, 31 Jan 2022 08:12:28 +0530
+Labels:       app=fsm
+              group=rainmaker
+              pod-template-hash=68c5bbf88c
+Annotations:  <none>
+Status:       Running
+IP:           10.42.3.67
+IPs:
+  IP:           10.42.3.67
+Controlled By:  ReplicaSet/fsm-68c5bbf88c
+Init Containers:
+  fsm-db-migration:
+    Container ID:   containerd://c0f5751136f668299978aa1a6a7a34c7095207c5ca4bfeefb1b782b1263230b5
+    Image:          egovio/fsm-db:2.3-patch-odisha-e91eaefc5-8
+    Image ID:       docker.io/egovio/fsm-db@sha256:a21411e9236c5d42ea9a451f218b3c51a47a92426e5263fb9bfbd2e27693c32e
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Mon, 31 Jan 2022 08:12:31 +0530
+      Finished:     Mon, 31 Jan 2022 08:12:32 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      DB_URL:            <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SCHEMA_TABLE:      fsm_schema
+      FLYWAY_USER:       <set to the key 'flyway-username' in secret 'db'>                Optional: false
+      FLYWAY_PASSWORD:   <set to the key 'flyway-password' in secret 'db'>                Optional: false
+      FLYWAY_LOCATIONS:  <set to the key 'flyway-locations' of config map 'egov-config'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Containers:
+  fsm:
+    Container ID:   containerd://fc41703d1e5d280f544676ce596a48ccfde23934ac27b56065b6e96f69d4877b
+    Image:          egovio/fsm:2.3-patch-odisha-e91eaefc5-8
+    Image ID:       docker.io/egovio/fsm@sha256:db9428ebfcbddcdc0dcc18b7fa3b16897bdd9f0c97fe049fdae3c9d6cbf96a8c
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Mon, 31 Jan 2022 08:12:35 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  1Gi
+    Requests:
+      memory:   1Gi
+    Liveness:   http-get http://:8080/fsm/actuator/health delay=120s timeout=3s period=60s #success=1 #failure=5
+    Readiness:  http-get http://:8080/fsm/actuator/health delay=90s timeout=3s period=30s #success=1 #failure=5
+    Environment:
+      SPRING_DATASOURCE_URL:                     <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SPRING_DATASOURCE_USERNAME:                <set to the key 'username' in secret 'db'>             Optional: false
+      SPRING_DATASOURCE_PASSWORD:                <set to the key 'password' in secret 'db'>             Optional: false
+      SPRING_FLYWAY_URL:                         <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SERVER_TOMCAT_MAX_THREADS:                 10
+      SERVER_TOMCAT_MAX_CONNECTIONS:             500
+      SPRING_DATASOURCE_TOMCAT_MAX_ACTIVE:       3
+      SPRING_DATASOURCE_TOMCAT_MAX_IDLE:         2
+      SPRING_DATASOURCE_TOMCAT_MIN_IDLE:         1
+      SPRING_FLYWAY_ENABLED:                     false
+      EGOV_EDCR_HOST:                            https://sujog.odisha.gov.in/
+      EGOV_IDGEN_HOST:                           http://egov-idgen:8080/
+      EGOV_MDMS_HOST:                            http://egov-mdms-service:8080/
+      EGOV_USER_HOST:                            http://egov-user:8080/
+      EGOV_LOCATION_HOST:                        http://egov-location:8080/
+      EGOV_VENDOR_HOST:                          http://vendor.egov:8080/
+      EGOV_VEHICLE_HOST:                         http://vehicle.egov:8080/
+      EGOV_LOCALIZATION_HOST:                    http://egov-localization:8080/
+      EGOV_BILLINGSERVICE_HOST:                  http://billing-service:8080/
+      EGOV_COLLECTION_SERVICE_HOST:              http://collection-services:8080/
+      EGOV_URL_SHORTNER_HOST:                    
+      EGOV_PDF_HOST:                             
+      EGOV_UI_APP_HOST:                          https://sujog.odisha.gov.in/
+      EGOV_FSM_CALCULATOR_HOST:                  http://fsm-calculator.egov:8080/
+      EGOV_FSM_SKIPPAYMENT_STATUS:               NO, NO
+      EGOV_LANDINFO_HOST:                        http://land-services:8080/
+      WORKFLOW_CONTEXT_PATH:                     http://egov-workflow-v2:8080/
+      WORKFLOW_TRANSITION_PATH:                  egov-workflow-v2/egov-wf/process/_transition
+      TRACER_ERRORS_PROVIDEEXCEPTIONINDETAILS:   true
+      SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER:  org.egov.tracer.kafka.deserializer.HashMapDeserializer
+      SPRING_KAFKA_CONSUMER_KEY_DESERIALIZER:    org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_CONSUMER_GROUP_ID:            egov-fsm-services
+      PERSISTER_SAVE_FSM_TOPIC:                  save-fsm-application-1
+      PERSISTER_UPDATE_FSM_TOPIC:                update-fsm-application
+      PERSISTER_UPDATE_FSM_WORKFLOW_TOPIC:       update-fsm-workflow-application
+      PERSISTER_UPDATE_FSM_ADHOC_TOPIC:          update-fsm-adhoc-application
+      SPRING_KAFKA_PRODUCER_KEY_SERIALIZER:      org.apache.kafka.common.serialization.StringSerializer
+      SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER:    org.springframework.kafka.support.serializer.JsonSerializer
+      SPRING_KAFKA_BOOTSTRAP_SERVERS:            <set to the key 'kafka-brokers' of config map 'egov-config'>  Optional: false
+      APP_TIMEZONE:                              <set to the key 'timezone' of config map 'egov-config'>       Optional: false
+      JAVA_OPTS:                                 -Xmx512m -Xms256m
+      JAVA_ARGS:                                 -Dspring.profiles.active=monitoring
+      SPRING_JPA_SHOW_SQL:                       true
+      SERVER_PORT:                               8080
+      EGOV_IDGEN_FSM_APPLICATIONNUM_FORMAT:      OD-FSM-[cy:yyyy-MM-dd]-[SEQ_EGOV_FSM]
+      JAEGER_SERVICE_NAME:                       fsm
+      JAEGER_SAMPLER_TYPE:                       remote
+      JAEGER_AGENT_HOST:                          (v1:status.hostIP)
+      JAEGER_AGENT_PORT:                         6831
+      JAEGER_SAMPLER_MANAGER_HOST_PORT:          $(JAEGER_AGENT_HOST):5778
+      SECURITY_BASIC_ENABLED:                    false
+      MANAGEMENT_SECURITY_ENABLED:               false
+      TRACER_OPENTRACING_ENABLED:                true
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
