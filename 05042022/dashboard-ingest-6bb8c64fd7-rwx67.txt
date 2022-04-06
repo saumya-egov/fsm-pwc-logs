@@ -1,0 +1,104 @@
+Name:         dashboard-ingest-6bb8c64fd7-rwx67
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk02.osdc.gov.in/10.150.231.5
+Start Time:   Thu, 31 Mar 2022 09:35:34 +0530
+Labels:       app=dashboard-ingest
+              group=rainmaker
+              pod-template-hash=6bb8c64fd7
+Annotations:  <none>
+Status:       Running
+IP:           10.42.4.38
+IPs:
+  IP:           10.42.4.38
+Controlled By:  ReplicaSet/dashboard-ingest-6bb8c64fd7
+Init Containers:
+  git-sync:
+    Container ID:   containerd://c6cf3b1f456f519658ced49aa54e67f280b8d51d52f44376c56e8dd66c8fb752
+    Image:          k8s.gcr.io/git-sync:v3.1.1
+    Image ID:       k8s.gcr.io/git-sync@sha256:aa701af5a29738f4a7aa1686f189787d92cea6401e0e81a170e98b10d365a949
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 31 Mar 2022 09:35:35 +0530
+      Finished:     Thu, 31 Mar 2022 09:35:45 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GIT_SYNC_REPO:      git@github.com:od-egov-git/configs
+      GIT_SYNC_BRANCH:    od-dashboards
+      GIT_SYNC_DEPTH:     1
+      GIT_SYNC_ONE_TIME:  true
+      GIT_SYNC_SSH:       true
+      GIT_SYNC_ROOT:      /work-dir
+    Mounts:
+      /etc/git-secret from git-secret (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+      /work-dir from workdir (rw)
+Containers:
+  dashboard-ingest:
+    Container ID:   containerd://e44284193240fd12ac3e2ea29cfe1f230d2ac156fd4e8053ec680c643fb979f0
+    Image:          egovio/dashboard-ingest:fsm-v2.3-fixes-c4807d1-2
+    Image ID:       docker.io/egovio/dashboard-ingest@sha256:c5a931ae3dccc7d56d93f9a491c7a41c3790ab6842177f5f9682d4afd9ae5761
+    Ports:          8080/TCP, 5005/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Running
+      Started:      Thu, 31 Mar 2022 09:35:46 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  1Gi
+    Requests:
+      memory:  1Gi
+    Environment:
+      SERVICES_ESINDEXER_HOST:                  http://elasticsearch-client-v1.es-cluster:9200/
+      SERVICES_ESINDEXER_HOST_NAME:             elasticsearch-client-v1.es-cluster:9200
+      SERVICES_ESINDEXER_HOST_PORT:             9200
+      ES_TARGET_INDEX_NAME:                     dss-target_v1
+      ES_INDEX_NAME:                            dss-collection_v1
+      ES_DOCUMENT_TYPE:                         pipeline_data
+      ES_HOST_SCHEMA:                           https
+      ES_INDEX_SEARCHQUERY_COLLECTION:          {"size": "10","query":{"bool":{"must":[{"wildcard": {"Data.tenantId.keyword":"pb.*"}}]}}}
+      ES_INDEX_SEARCHQUERY_BILLING:             {"size": "10","query":{"bool":{"must":[{"wildcard": {"tenantid.keyword":"pb.*"}}]}}}
+      EGOV_SERVICES_ESINDEXER_HOST_SEARCH:      /_search
+      SPRING_DATA_ELASTICSEARCH_CLUSTER_NAME:   elasticsearch-v1
+      SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES:  elasticsearch-v1
+      TRANSFORMATION_CONFIG_LOCATION:           config/transform_transaction_v1.json
+      SCHEMA_TRANSACTION_VALIDATION:            config/validator_transaction_v1.json
+      SCHEMA_TRANSACTION_TRANSFORMATION:        config/transform_transaction_v1.json
+      SCHEMA_TRANSACTION_ENRICHMENT:            config/enrichment_transaction_v1.json
+      CONFIG_SCHEMA_PATHS:                      file:///work-dir/configs/egov-dss-dashboards/dashboard-ingest/*.json
+      SPRING_KAFKA_CONSUMER_GROUP_ID:           pipeline-group
+      KAFKA_TOPICS_INCOMING_DATA:               egov.collection.receipt-create
+      KAFKA_CONFIG_BOOTSTRAP_SERVER_CONFIG:     <set to the key 'kafka-brokers' of config map 'egov-config'>  Optional: false
+      SPRING_KAFKA_BOOTSTRAP_SERVERS:           <set to the key 'kafka-brokers' of config map 'egov-config'>  Optional: false
+      SERVER_PORT:                              8080
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+      /work-dir from workdir (rw)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  git-secret:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  git-creds
+    Optional:    false
+  workdir:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>

@@ -1,0 +1,50 @@
+Name:         dss-dashboard-68869fcbc5-h74lt
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk03.osdc.gov.in/10.150.231.6
+Start Time:   Thu, 31 Mar 2022 09:35:06 +0530
+Labels:       app=dss-dashboard
+              group=web
+              pod-template-hash=68869fcbc5
+Annotations:  <none>
+Status:       Running
+IP:           10.42.5.199
+IPs:
+  IP:           10.42.5.199
+Controlled By:  ReplicaSet/dss-dashboard-68869fcbc5
+Containers:
+  dss-dashboard:
+    Container ID:   containerd://0a154bf6c4e128f0bd828ff727e05595932282a8c4f99ee69403b8dc84c72c00
+    Image:          egovio/dss-dashboard:fsm-2.5-odisha-520453001-3
+    Image ID:       docker.io/egovio/dss-dashboard@sha256:1b23e6073ace29b5c8de804dccd6c1d701afacec32144f7790bcdb7c6c6a32e3
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 31 Mar 2022 09:35:07 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  128Mi
+    Requests:
+      memory:   128Mi
+    Readiness:  http-get http://:80/dashboard/ delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:
+      REACT_APP_WS_FINANCIALINDICATORS:  
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>

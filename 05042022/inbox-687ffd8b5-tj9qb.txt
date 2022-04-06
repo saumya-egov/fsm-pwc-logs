@@ -1,0 +1,70 @@
+Name:         inbox-687ffd8b5-tj9qb
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk01.osdc.gov.in/10.150.231.4
+Start Time:   Thu, 31 Mar 2022 09:35:51 +0530
+Labels:       app=inbox
+              group=rainmaker
+              pod-template-hash=687ffd8b5
+Annotations:  <none>
+Status:       Running
+IP:           10.42.3.37
+IPs:
+  IP:           10.42.3.37
+Controlled By:  ReplicaSet/inbox-687ffd8b5
+Containers:
+  inbox:
+    Container ID:   containerd://bcf28d692a850c7893575ecd7ac9930d1628a4bb4f1f0872a6334ff67b667358
+    Image:          egovio/inbox:2.3-patch-odisha-f66fb99ac-1
+    Image ID:       docker.io/egovio/inbox@sha256:a0cbee09b1d2e8e1f162a3eabce8846e2a6ed225393fdf66216d86650c090a2f
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 31 Mar 2022 09:35:54 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  384Mi
+    Requests:
+      memory:   384Mi
+    Liveness:   http-get http://:8080/inbox/actuator/health delay=120s timeout=3s period=60s #success=1 #failure=5
+    Readiness:  http-get http://:8080/inbox/actuator/health delay=90s timeout=3s period=30s #success=1 #failure=5
+    Environment:
+      SERVER_TOMCAT_MAX_THREADS:                10
+      SERVER_TOMCAT_MAX_CONNECTIONS:            500
+      WORKFLOW_HOST:                            http://egov-workflow-v2:8080/
+      EGOV_USER_HOST:                           http://egov-user:8080/
+      EGOV_SEARCHER_HOST:                       http://egov-searcher:8080/
+      SERVICE_SEARCH_MAPPING:                   {"FSM":{"searchPath":"http://fsm:8080/fsm/v1/_search","dataRoot":"fsm","applNosParam":"applicationNos","businessIdProperty":"applicationNo"},"FSM_VEHICLE_TRIP":{"searchPath":"http://vehicle:8080/vehicle/trip/v1/_search","dataRoot":"vehicleTrip","applNosParam":"applicationNos","businessIdProperty":"applicationNo"}}
+      TRACER_ERRORS_PROVIDEEXCEPTIONINDETAILS:  true
+      APP_TIMEZONE:                             <set to the key 'timezone' of config map 'egov-config'>  Optional: false
+      JAVA_OPTS:                                -Xmx280m -Xms280m
+      JAVA_ARGS:                                -Dspring.profiles.active=monitoring
+      SERVER_PORT:                              8080
+      JAEGER_SERVICE_NAME:                      inbox
+      JAEGER_SAMPLER_TYPE:                      remote
+      JAVA_ENABLE_DEBUG:                        TRUE
+      JAEGER_AGENT_HOST:                         (v1:status.hostIP)
+      JAEGER_AGENT_PORT:                        6831
+      JAEGER_SAMPLER_MANAGER_HOST_PORT:         $(JAEGER_AGENT_HOST):5778
+      SECURITY_BASIC_ENABLED:                   false
+      MANAGEMENT_SECURITY_ENABLED:              false
+      TRACER_OPENTRACING_ENABLED:               true
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>

@@ -1,0 +1,113 @@
+Name:         pdf-service-f46896564-n6jdx
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk03.osdc.gov.in/10.150.231.6
+Start Time:   Thu, 31 Mar 2022 09:35:13 +0530
+Labels:       app=pdf-service
+              group=rainmaker
+              pod-template-hash=f46896564
+Annotations:  <none>
+Status:       Running
+IP:           10.42.5.217
+IPs:
+  IP:           10.42.5.217
+Controlled By:  ReplicaSet/pdf-service-f46896564
+Init Containers:
+  pdf-service-db-migration:
+    Container ID:   containerd://b8b3e9a35a580c013a56c24a7128bdf9be325b5e8fde1bdb9a8c97965430a5fd
+    Image:          odhub/pdf-service-db:rel2-19032021-1
+    Image ID:       docker.io/odhub/pdf-service-db@sha256:e8de5345c4c3bfd63f29a640c41d5809163138ff7aab75805a03589c0d5dff47
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 31 Mar 2022 09:35:17 +0530
+      Finished:     Thu, 31 Mar 2022 09:35:27 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      DB_URL:            <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SCHEMA_TABLE:      pdf_service_schema
+      FLYWAY_USER:       <set to the key 'flyway-username' in secret 'db'>                Optional: false
+      FLYWAY_PASSWORD:   <set to the key 'flyway-password' in secret 'db'>                Optional: false
+      FLYWAY_LOCATIONS:  <set to the key 'flyway-locations' of config map 'egov-config'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+  git-sync:
+    Container ID:   containerd://c54de0c5061b87282dfbccf6f492e0a944899400bf405b4fe116514fc3618f3c
+    Image:          k8s.gcr.io/git-sync:v3.1.1
+    Image ID:       k8s.gcr.io/git-sync@sha256:aa701af5a29738f4a7aa1686f189787d92cea6401e0e81a170e98b10d365a949
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 31 Mar 2022 09:35:30 +0530
+      Finished:     Thu, 31 Mar 2022 09:35:43 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      GIT_SYNC_REPO:      git@github.com:od-egov-git/configs
+      GIT_SYNC_BRANCH:    master
+      GIT_SYNC_DEPTH:     1
+      GIT_SYNC_ONE_TIME:  true
+      GIT_SYNC_SSH:       true
+      GIT_SYNC_ROOT:      /work-dir
+    Mounts:
+      /etc/git-secret from git-secret (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+      /work-dir from workdir (rw)
+Containers:
+  pdf-service:
+    Container ID:   containerd://8b886f24eafa590662b6b16b58e34fd9ea08bcf26f149c864424df4089c83571
+    Image:          odhub/pdf-service:fsm-17112021-1
+    Image ID:       docker.io/odhub/pdf-service@sha256:5543ffa0b9103f1fc1f947f3e65f7cb8315b6970d58f1648797c8ae07deca9b9
+    Ports:          8080/TCP, 5005/TCP
+    Host Ports:     0/TCP, 0/TCP
+    State:          Running
+      Started:      Thu, 31 Mar 2022 09:35:50 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      KAFKA_BROKER_HOST:                 <set to the key 'kafka-brokers' of config map 'egov-config'>  Optional: false
+      APP_TIMEZONE:                      <set to the key 'timezone' of config map 'egov-config'>       Optional: false
+      SERVER_PORT:                       8080
+      MAX_NUMBER_PAGES:                  80
+      DATA_CONFIG_URLS:                  file:///work-dir/configs/pdf-service/data-config/firenoc-receipt.json,file:///work-dir/configs/pdf-service/data-config/pt-receipt.json,file:///work-dir/configs/pdf-service/data-config/tradelicense-receipt.json,file:///work-dir/configs/pdf-service/data-config/consolidatedbill.json,file:///work-dir/configs/pdf-service/data-config/consolidatedreceipt.json,file:///work-dir/configs/pdf-service/data-config/tlapplication.json,file:///work-dir/configs/pdf-service/data-config/tlcertificate.json,file:///work-dir/configs/pdf-service/data-config/tplcertificate.json,file:///work-dir/configs/pdf-service/data-config/ws-consolidatedacknowlegment.json,file:///work-dir/configs/pdf-service/data-config/ws-consolidatedsewerageconnection.json,file:///work-dir/configs/pdf-service/data-config/buildingpermit.json,file:///work-dir/configs/pdf-service/data-config/buildingpermit-low.json,file:///work-dir/configs/pdf-service/data-config/consolidatedreceipt.json,file:///work-dir/configs/pdf-service/data-config/fsm-receipt.json,file:///work-dir/configs/pdf-service/data-config/ws-onetime-receipt.json,file:///work-dir/configs/pdf-service/data-config/property-receipt.json,file:///work-dir/configs/pdf-service/data-config/mrcertificate.json,file:///work-dir/configs/pdf-service/data-config/occupancy-certificate.json,file:///work-dir/configs/pdf-service/data-config/ws-bill.json,file:///work-dir/configs/pdf-service/data-config/tlrenewalcertificate.json,file:///work-dir/configs/pdf-service/data-config/ws-estimationnotice.json,file:///work-dir/configs/pdf-service/data-config/ws-sanctionletter.json,file:///work-dir/configs/pdf-service/data-config/mr-receipt.json,file:///work-dir/configs/pdf-service/data-config/pt-consolidatedreceipt.json,file:///work-dir/configs/pdf-service/data-config/ws-connection-onetime-receipt.json
+      FORMAT_CONFIG_URLS:                file:///work-dir/configs/pdf-service/format-config/firenoc-receipt.json,file:///work-dir/configs/pdf-service/format-config/pt-receipt.json,file:///work-dir/configs/pdf-service/format-config/tradelicense-receipt.json,file:///work-dir/configs/pdf-service/format-config/consolidatedbill.json,file:///work-dir/configs/pdf-service/format-config/consolidatedreceipt.json,file:///work-dir/configs/pdf-service/format-config/tlapplication.json,file:///work-dir/configs/pdf-service/format-config/tlcertificate.json,file:///work-dir/configs/pdf-service/format-config/tplcertificate.json,file:///work-dir/configs/pdf-service/format-config/ws-consolidatedacknowlegment.json,file:///work-dir/configs/pdf-service/format-config/ws-consolidatedsewerageconnection.json,file:///work-dir/configs/pdf-service/format-config/buildingpermit.json,file:///work-dir/configs/pdf-service/format-config/buildingpermit-low.json,file:///work-dir/configs/pdf-service/format-config/consolidatedreceipt.json,file:///work-dir/configs/pdf-service/format-config/fsm-receipt.json,file:///work-dir/configs/pdf-service/format-config/ws-onetime-receipt.json,file:///work-dir/configs/pdf-service/format-config/property-receipt.json,file:///work-dir/configs/pdf-service/format-config/mrcertificate.json,file:///work-dir/configs/pdf-service/format-config/occupancy-certificate.json,file:///work-dir/configs/pdf-service/format-config/ws-bill.json,file:///work-dir/configs/pdf-service/format-config/tlrenewalcertificate.json,file:///work-dir/configs/pdf-service/format-config/ws-estimationnotice.json,file:///work-dir/configs/pdf-service/format-config/ws-sanctionletter.json,file:///work-dir/configs/pdf-service/format-config/mr-receipt.json,file:///work-dir/configs/pdf-service/format-config/pt-consolidatedreceipt.json,file:///work-dir/configs/pdf-service/format-config/ws-connection-onetime-receipt.json
+      EGOV_LOCALISATION_HOST:            http://egov-localization:8080/
+      EGOV_FILESTORE_SERVICE_HOST:       http://egov-filestore:8080/
+      EGOV_HOST:                         https://sujog.odisha.gov.in/
+      JAEGER_SERVICE_NAME:               pdf-service
+      JAEGER_SAMPLER_TYPE:               remote
+      JAEGER_AGENT_HOST:                  (v1:status.hostIP)
+      JAEGER_AGENT_PORT:                 6831
+      JAEGER_SAMPLER_MANAGER_HOST_PORT:  $(JAEGER_AGENT_HOST):5778
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+      /work-dir from workdir (rw)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  git-secret:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  git-creds
+    Optional:    false
+  workdir:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
