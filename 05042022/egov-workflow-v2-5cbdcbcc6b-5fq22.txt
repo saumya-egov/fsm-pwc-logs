@@ -1,0 +1,110 @@
+Name:         egov-workflow-v2-5cbdcbcc6b-5fq22
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk01.osdc.gov.in/10.150.231.4
+Start Time:   Thu, 31 Mar 2022 09:35:42 +0530
+Labels:       app=egov-workflow-v2
+              group=rainmaker
+              pod-template-hash=5cbdcbcc6b
+Annotations:  <none>
+Status:       Running
+IP:           10.42.3.27
+IPs:
+  IP:           10.42.3.27
+Controlled By:  ReplicaSet/egov-workflow-v2-5cbdcbcc6b
+Init Containers:
+  egov-workflow-v2-db-migration:
+    Container ID:   containerd://80d4ee1d2efd2f737f29158d436509729ff52cd9a21ebe6fab3164939190c417
+    Image:          odhub/egov-workflow-v2-db:fsm-17112021-1
+    Image ID:       docker.io/odhub/egov-workflow-v2-db@sha256:862a34bedd6f6857ba1d3342337adb7dbd81f22c1837d840711266983bddb538
+    Port:           <none>
+    Host Port:      <none>
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 31 Mar 2022 09:35:45 +0530
+      Finished:     Thu, 31 Mar 2022 09:35:46 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      DB_URL:            <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SCHEMA_TABLE:      egov_workflow_v2_schema
+      FLYWAY_USER:       <set to the key 'flyway-username' in secret 'db'>                Optional: false
+      FLYWAY_PASSWORD:   <set to the key 'flyway-password' in secret 'db'>                Optional: false
+      FLYWAY_LOCATIONS:  <set to the key 'flyway-locations' of config map 'egov-config'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Containers:
+  egov-workflow-v2:
+    Container ID:   containerd://7a0568a4ffe7694d178dbd305c4036e258b897b0866c4127434f5dc5697a6d2d
+    Image:          odhub/egov-workflow-v2:fsm-28112021-1
+    Image ID:       docker.io/odhub/egov-workflow-v2@sha256:6fae88fe5820af3f3276cc3b21aa608ba96ad53da75a38ff9bb697fa8d674a0b
+    Port:           8080/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Thu, 31 Mar 2022 09:36:32 +0530
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Thu, 31 Mar 2022 09:35:48 +0530
+      Finished:     Thu, 31 Mar 2022 09:36:30 +0530
+    Ready:          True
+    Restart Count:  1
+    Limits:
+      memory:  1Gi
+    Requests:
+      memory:   1Gi
+    Liveness:   http-get http://:8080/egov-workflow-v2/health delay=60s timeout=3s period=60s #success=1 #failure=5
+    Readiness:  http-get http://:8080/egov-workflow-v2/health delay=60s timeout=3s period=30s #success=1 #failure=5
+    Environment:
+      SPRING_DATASOURCE_URL:                     <set to the key 'db-url' of config map 'egov-config'>  Optional: false
+      SPRING_DATASOURCE_USERNAME:                <set to the key 'username' in secret 'db'>             Optional: false
+      SPRING_DATASOURCE_PASSWORD:                <set to the key 'password' in secret 'db'>             Optional: false
+      SPRING_KAFKA_CONSUMER_VALUE_DESERIALIZER:  org.egov.tracer.kafka.deserializer.HashMapDeserializer
+      SPRING_KAFKA_CONSUMER_KEY_DESERIALIZER:    org.apache.kafka.common.serialization.StringDeserializer
+      SPRING_KAFKA_CONSUMER_GROUP_ID:            egov-tl-services
+      SPRING_KAFKA_PRODUCER_KEY_SERIALIZER:      org.apache.kafka.common.serialization.StringSerializer
+      SPRING_KAFKA_PRODUCER_VALUE_SERIALIZER:    org.springframework.kafka.support.serializer.JsonSerializer
+      PERSISTER_SAVE_WF_TOPIC:                   save-wf-transitions
+      EGOV_MDMS_HOST:                            http://egov-mdms-service:8080/
+      EGOV_MDMS_SEARCH_ENDPOINT:                 /egov-mdms-service/v1/_search
+      SPRING_KAFKA_BOOTSTRAP_SERVERS:            <set to the key 'kafka-brokers' of config map 'egov-config'>  Optional: false
+      SERVER_TOMCAT_MAX_THREADS:                 10
+      SERVER_TOMCAT_MAX_CONNECTIONS:             500
+      SPRING_DATASOURCE_TOMCAT_MAX_ACTIVE:       3
+      SPRING_DATASOURCE_TOMCAT_MAX_IDLE:         2
+      SPRING_DATASOURCE_TOMCAT_MIN_IDLE:         1
+      EGOV_USER_HOST:                            http://egov-user:8080/
+      EGOV_USER_SEARCH_ENDPOINT:                 /user/v1/_search
+      APP_TIMEZONE:                              <set to the key 'timezone' of config map 'egov-config'>  Optional: false
+      JAVA_OPTS:                                 -Xmx1000m -Xms900m
+      SPRING_JPA_SHOW_SQL:                       true
+      SERVER_PORT:                               8080
+      FLYWAY_ENABLED:                            false
+      JAEGER_SERVICE_NAME:                       egov-workflow-v2
+      JAEGER_SAMPLER_TYPE:                       remote
+      JAEGER_AGENT_HOST:                          (v1:status.hostIP)
+      JAEGER_AGENT_PORT:                         6831
+      JAEGER_SAMPLER_MANAGER_HOST_PORT:          $(JAEGER_AGENT_HOST):5778
+      JAVA_ARGS:                                 -Dspring.profiles.active=monitoring
+      SECURITY_BASIC_ENABLED:                    false
+      MANAGEMENT_SECURITY_ENABLED:               false
+      EGOV_WF_DEFAULT_LIMIT:                     100
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
