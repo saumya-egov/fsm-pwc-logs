@@ -1,0 +1,54 @@
+Name:         digit-ui-78ff6c6ffc-tswmb
+Namespace:    egov
+Priority:     0
+Node:         sujogk8wrk02.osdc.gov.in/10.150.231.5
+Start Time:   Mon, 25 Apr 2022 07:36:15 +0530
+Labels:       app=digit-ui
+              group=web
+              pod-template-hash=78ff6c6ffc
+Annotations:  <none>
+Status:       Running
+IP:           10.42.4.7
+IPs:
+  IP:           10.42.4.7
+Controlled By:  ReplicaSet/digit-ui-78ff6c6ffc
+Containers:
+  digit-ui:
+    Container ID:   containerd://9f69ed98339d14e8b3c8b8dad3d1d3ec49f62ebb923fc6b4e3a882b6d1e67352
+    Image:          egovio/digit-ui:san-od-b7e35f4-87
+    Image ID:       docker.io/egovio/digit-ui@sha256:9b4baf0c4dfe5b87d830c2f04c17e029a6b588ae7d1d4ca4ae6d659848a68a10
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Mon, 25 Apr 2022 07:36:17 +0530
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      memory:  128Mi
+    Requests:
+      memory:     128Mi
+    Readiness:    http-get http://:80/digit-ui/ delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:
+      /etc/nginx/conf.d/sub_filter.conf from js-injection (rw,path="sub_filter.conf")
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-zppr5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  js-injection:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      digit-ui-js-injection
+    Optional:  false
+  default-token-zppr5:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-zppr5
+    Optional:    false
+QoS Class:       Burstable
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:          <none>
